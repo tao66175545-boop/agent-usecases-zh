@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="订阅周刊"
+  description="订阅 Agent用例导航周刊（邮件服务待接，暂不提交）。"
+  currentPath="/subscribe"
+>
+  <section class="container subscribe-page">
+    <h1>订阅周刊</h1>
+    <p class="lead">
+      计划每周精选 3–5 条可复现 Agent 玩法。当前为前端占位，
+      <strong>邮件服务待接，暂不提交</strong>。
+    </p>
+
+    <form class="form-card" onsubmit="return false;" aria-describedby="subscribe-note">
+      <label for="email">邮箱</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        placeholder="you@example.com"
+        autocomplete="email"
+        disabled
+      />
+      <button class="btn btn-primary" type="button" disabled>订阅（待开通）</button>
+      <p class="form-note" id="subscribe-note">
+        邮件服务待接，暂不提交。确认 Resend（或等价服务）后再接入真实订阅。
+      </p>
+    </form>
+  </section>
+</BaseLayout>

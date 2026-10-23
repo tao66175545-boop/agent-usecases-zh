@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import UseCaseCard from '../components/UseCaseCard.astro';
+
+const usecases = (await getCollection('usecases', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'zh-CN'));
+
+const scenes = [...new Set(usecases.map((u) => u.data.scene))];
+---
+<BaseLayout currentPath="/">
+  <section class="container hero">
+    <div class="hero-kicker">中文 · AI Agent 用例目录</div>
+    <h1>Agent用例导航</h1>
+    <p class="lead">
+      精选可复现的 Agent 玩法：场景、工具栈、步骤摘要与来源。对标公开用例目录思路，
+      优先收录「能抄」的短清单，不做编造链接。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#list">浏览用例</a>
+      <a class="btn btn-ghost" href="/subscribe">订阅周刊（占位）</a>
+    </div>
+    <div class="filters" aria-label="场景概览">
+      <span class="chip"><strong>{usecases.length}</strong> 条用例</span>
+      {scenes.map((scene) => (
+        <span class="chip">{scene}</span>
+      ))}
+    </div>
+  </section>
+
+  <section class="container" id="list">
+    {usecases.length === 0 ? (
+      <p class="empty">暂无用例，请在 <code>src/content/usecases/</code> 添加 Markdown。</p>
+    ) : (
+      <div class="grid">
+        {usecases.map((item) => (
+          <UseCaseCard
+            slug={item.slug}
+            title={item.data.title}
+            scene={item.data.scene}
+            difficulty={item.data.difficulty}
+            summary={item.data.summary}
+            tools={item.data.tools}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>

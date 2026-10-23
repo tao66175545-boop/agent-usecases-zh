@@ -1,0 +1,87 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const usecases = await getCollection('usecases', ({ data }) => !data.draft);
+  return usecases.map((entry) => ({
+    params: { slug: entry.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const entry = await getEntry('usecases', slug!);
+if (!entry) {
+  throw new Error(`Use case not found: ${slug}`);
+}
+
+const { Content } = await entry.render();
+const { title, scene, audience, tools, difficulty, summary, source, sourceName, steps } = entry.data;
+const hasRealSource = source.startsWith('http://') || source.startsWith('https://');
+---
+<BaseLayout title={title} description={summary} currentPath={`/usecases/${slug}`}>
+  <article class="container detail">
+    <div class="detail-nav">
+      <a href="/">← 返回用例列表</a>
+    </div>
+
+    <header class="detail-header">
+      <div class="card-meta">
+        <span class="tag tag-scene">{scene}</span>
+        <span class={`tag tag-diff-${difficulty}`}>{difficulty}</span>
+      </div>
+      <h1>{title}</h1>
+      <p class="detail-summary">{summary}</p>
+    </header>
+
+    <div class="detail-grid">
+      <section class="panel">
+        <h2>步骤摘要</h2>
+        <ol class="steps">
+          {steps.map((step) => <li>{step}</li>)}
+        </ol>
+        <div class="prose">
+          <Content />
+        </div>
+      </section>
+
+      <aside class="panel">
+        <h2>用例信息</h2>
+        <dl class="meta-list">
+          <div>
+            <dt>场景</dt>
+            <dd>{scene}</dd>
+          </div>
+          <div>
+            <dt>谁用</dt>
+            <dd>{audience}</dd>
+          </div>
+          <div>
+            <dt>工具栈</dt>
+            <dd>
+              <div class="tool-list">
+                {tools.map((tool) => <span class="tag">{tool}</span>)}
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>难度</dt>
+            <dd>{difficulty}</dd>
+          </div>
+        </dl>
+
+        <div class="source-box">
+          <strong>来源</strong><br />
+          {hasRealSource ? (
+            <>
+              {sourceName && <span>{sourceName} · </span>}
+              <a href={source} target="_blank" rel="noopener noreferrer">{source}</a>
+            </>
+          ) : (
+            <span>{source}</span>
+          )}
+        </div>
+      </aside>
+    </div>
+  </article>
+</BaseLayout>

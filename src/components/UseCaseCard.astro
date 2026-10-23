@@ -1,0 +1,24 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  scene: string;
+  difficulty: string;
+  summary: string;
+  tools: string[];
+}
+const { slug, title, scene, difficulty, summary, tools } = Astro.props;
+const toolsPreview = tools.slice(0, 3).join(' · ');
+---
+<a class="card" href={`/usecases/${slug}`}>
+  <div class="card-meta">
+    <span class="tag tag-scene">{scene}</span>
+    <span class={`tag tag-diff-${difficulty}`}>{difficulty}</span>
+  </div>
+  <h2>{title}</h2>
+  <p>{summary}</p>
+  <div class="card-footer">
+    <span class="tools-inline" title={tools.join(', ')}>{toolsPreview}</span>
+    <span>查看 →</span>
+  </div>
+</a>
