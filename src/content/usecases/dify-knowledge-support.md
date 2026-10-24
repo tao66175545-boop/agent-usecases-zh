@@ -8,7 +8,8 @@ tools:
   - 工单系统（可选）
 difficulty: 进阶
 summary: 把产品文档与 FAQ 灌进 Dify，聊天 Agent 先检索再回答，低置信或敏感问题自动转人工。
-source: 待补链接
+source: https://docs.dify.ai/en/use-dify/knowledge/integrate-knowledge-within-application
+sourceName: Dify Docs
 steps:
   - 整理 FAQ / 帮助中心文档，分块清洗后导入知识库
   - 配置检索增强对话，要求回答附「依据片段」
@@ -17,4 +18,4 @@ steps:
   - 每周把未覆盖问题补进知识库
 ---
 
-典型可复现玩法。产品名真实，具体公开案例 URL 待补。
+依据 Dify 官方「把知识库接入应用」流程：建知识库 → Chatbot 加 Context → 开 Citation → 调试后发布。升级人工需另接工单/人工渠道规则。

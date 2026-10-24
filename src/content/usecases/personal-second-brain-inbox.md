@@ -8,7 +8,8 @@ tools:
   - 浏览器剪藏
 difficulty: 入门
 summary: 把随手链接收到统一收件箱，Agent 打标签、写三句摘要并建议放入哪个知识库分区。
-source: 待补链接
+source: https://www.notion.com/help/guides/5-ways-to-get-more-value-out-of-your-reading-list-with-notion-ai
+sourceName: Notion Help
 steps:
   - 固定一个「Inbox」数据库或文件夹作为唯一入口
   - 批量或逐条把链接/剪藏喂给 Agent，要求输出标签、摘要、推荐分区
@@ -17,4 +18,4 @@ steps:
   - 把常用提示词固化成模板
 ---
 
-典型可复现玩法。来源待补。
+参考 Notion 官方阅读清单玩法：Inbox/阅读库用 AI Summary 或 Custom AI autofill 出标签与摘要，再人工归入正式分区。
